@@ -1,8 +1,14 @@
-run: clean build
+run: all
+
+all: build_1 build_2
+
+build_1: clean
+	gcc -std=c99 -g -Wall -Wextra -pedantic-errors -o main.out lab1_prob1.c
 	./main.out
 
-build:
-	gcc -g -Wall -Wextra -pedantic-errors -fsanitize=address,undefined -o main.out lab1_prob2.c
+build_2: clean
+	gcc -std=c99 -g -Wall -Wextra -pedantic-errors -o main.out lab1_prob2.c
+	./main.out
 
 clean:
 	rm -f *.out *.debug
