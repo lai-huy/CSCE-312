@@ -39,14 +39,39 @@ void read_inputs_from_ip_if(){
 	// 1. Provide your input code here
 	// This function should read the current state of the available sensors (8 in total)
 
-	// Hint : You can use scanf to obtain inputs for the sensors 
+	// Hint : You can use scanf to obtain inputs for the sensors
+    printf("Is the Driver on the Seat?\t");
+    scanf("%u", &driver_on_seat);
 
+    printf("Is the Driver Seat Belt Fastened?\t");
+    scanf("%u", &driver_seat_belt_fastened);
+    
+    printf("Is the Enginer Running?\t");
+    scanf("%u", &driver_seat_belt_fastened);
+
+    printf("Are the Doors Closed?\t");
+    scanf("%u", &driver_seat_belt_fastened);
+    
+    printf("Is the Key in Car?\t");
+    scanf("%u", &driver_seat_belt_fastened);
+    
+    printf("Is the Door Lock Leaver activated?\t");
+    scanf("%u", &driver_seat_belt_fastened);
+    
+    printf("Is the Break Pedal activated?\t");
+    scanf("%u", &driver_seat_belt_fastened);
+
+    printf("Is the Driver Seat Belt Fastened?\t");
+    scanf("%u", &driver_seat_belt_fastened);
 }
 
 void write_output_to_op_if(){
 
     // 2. Provide your output code here
     // This function should display/print the state of the 3 actuators (DLA/BELL/BA)
+    printf("\nBELL:\t%u\n", bell);
+    printf("DLA:\t%u\n", door_lock_actu);
+    printf("BA:\t%u\n", brake_actu);
 }
 
 
@@ -61,6 +86,19 @@ void control_action(){
     */
     if (engine_running && !doors_closed) 
        bell = 1;
+    
+    if (engine_running && !driver_seat_belt_fastened)
+        bell = 1;
+
+    if (!driver_on_seat && !key_in_car)
+        door_lock_actu = 1;
+    else
+        door_lock_actu = 0;
+    
+    if (brake_pedal && car_moving)
+        brake_actu = 1;
+    else
+        brake_actu = 0;
 }
 
 
@@ -75,15 +113,15 @@ int main(int argc, char *argv[])
         until the system is powered off
     */
 
-    for (; ; ) {
-        bell = 0;
-        door_lock_actu = 0;
-        brake_actu = 0;
+    // for (; ; ) {
+    //     bell = 0;
+    //     door_lock_actu = 0;
+    //     brake_actu = 0;
 
-        read_inputs_from_ip_if();
-        control_action();
-        write_output_to_op_if();
-    }
+    //     read_inputs_from_ip_if();
+    //     control_action();
+    //     write_output_to_op_if();
+    // }
  
     
     // code segment 2
@@ -96,35 +134,35 @@ int main(int argc, char *argv[])
         and your code written from 1-3 to the lab report 
     */
 
-    // int test[8][8] = {  {0, 0, 0, 0, 0, 0, 0, 0}, 
-    //                     {1, 1, 0, 0, 1, 0, 1, 0}, 
-    //                     {0, 1, 0, 1, 1, 1, 1, 1}, 
-    //                     {1, 0, 1, 0, 1, 0, 0, 0}, 
-    //                     {1, 0, 1, 1, 1, 1, 0, 1}, 
-    //                     {1, 1, 1, 0, 1, 0, 1, 0}, 
-    //                     {1, 1, 1, 1, 1, 1, 1, 1}, 
-    //                     {1, 0, 0, 0, 1, 0, 0, 1} };
-    // for (int i = 0; i < 8; i++) {
-    //     bell = 0;
-    //     door_lock_actu = 0;
-    //     brake_actu = 0;
+    int test[8][8] = {  {0, 0, 0, 0, 0, 0, 0, 0}, 
+                        {1, 1, 0, 0, 1, 0, 1, 0}, 
+                        {0, 1, 0, 1, 1, 1, 1, 1}, 
+                        {1, 0, 1, 0, 1, 0, 0, 0}, 
+                        {1, 0, 1, 1, 1, 1, 0, 1}, 
+                        {1, 1, 1, 0, 1, 0, 1, 0}, 
+                        {1, 1, 1, 1, 1, 1, 1, 1}, 
+                        {1, 0, 0, 0, 1, 0, 0, 1} };
+    for (int i = 0; i < 8; i++) {
+        bell = 0;
+        door_lock_actu = 0;
+        brake_actu = 0;
 
-    //     driver_on_seat = test[i][0]; 
-    //     driver_seat_belt_fastened = test[i][1];
-    //     engine_running = test[i][2];
-    //     doors_closed = test[i][3];
-    //     key_in_car = test[i][4];
-    //     door_lock_lever = test[i][5];
-    //     brake_pedal = test[i][6];
-    //     car_moving = test[i][7];
+        driver_on_seat = test[i][0]; 
+        driver_seat_belt_fastened = test[i][1];
+        engine_running = test[i][2];
+        doors_closed = test[i][3];
+        key_in_car = test[i][4];
+        door_lock_lever = test[i][5];
+        brake_pedal = test[i][6];
+        car_moving = test[i][7];
         
-    //     control_action();
-    //     printf("Test %d: ", i);
-    //     printf("\n %d %d %d %d %d %d %d %d ", driver_on_seat, driver_seat_belt_fastened, 
-    //                                         engine_running, doors_closed, key_in_car, 
-    //                                         door_lock_lever, brake_pedal, car_moving);
-    //     write_output_to_op_if();
-    // }
+        control_action();
+        printf("Test %d: ", i);
+        printf("\n %d %d %d %d %d %d %d %d ", driver_on_seat, driver_seat_belt_fastened, 
+                                            engine_running, doors_closed, key_in_car, 
+                                            door_lock_lever, brake_pedal, car_moving);
+        write_output_to_op_if();
+    }
 
     return 0;
 }

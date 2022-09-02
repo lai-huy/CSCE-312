@@ -10,5 +10,17 @@ build_2: clean
 	gcc -std=c99 -g -Wall -Wextra -pedantic-errors -o main.out lab1_prob2.c
 	./main.out
 
+build_3: clean
+	gcc -std=c99 -g -Wall -Wextra -pedantic-errors -o main.out lab1_prob3_framework.c
+	./main.out
+
+build_4: clean
+	gcc -std=c99 -g -Wall -Wextra -pedantic-errors -o main.out lab1_prob4_framework.c
+	./main.out
+
+build_5: clean
+	gcc -std=c99 -g -Wall -Wextra -pedantic-errors -o main.out lab1_prob5_framework.c
+	./main.out
+
 clean:
 	rm -f *.out *.debug

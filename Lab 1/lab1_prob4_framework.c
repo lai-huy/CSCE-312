@@ -21,6 +21,8 @@ run this file as : gcc -std=c99 filename.c -o executableName
 
 #include <stdio.h> //This is useful to do i/o to test the code
 
+enum Inputs { DOS = 1, DSBF = 2, ER = 4, DC = 8, KIC = 16, DLC = 32, BP = 64, CM = 128 };
+
 unsigned int input = 0;
 unsigned int output = 0;
 
@@ -50,6 +52,8 @@ void control_action(){
     //if (engine_running && !doors_closed) bell = 1;
     if ((input & 12) == 4) 
       output = output | 1;
+    if ((input & (ER + DSBF) == 4))
+        output |= 1;
 
 }
 
