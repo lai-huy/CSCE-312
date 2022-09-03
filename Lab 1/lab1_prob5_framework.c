@@ -26,32 +26,54 @@
 #define CLOCKNAME CLOCK_PROCESS_CPUTIME_ID
 #endif
 
+unsigned int driver_on_seat;
+unsigned int driver_seat_belt_fastened;
+unsigned int engine_running;
+unsigned int doors_closed;
+unsigned int key_in_car;
+unsigned int door_lock_lever;
+unsigned int brake_pedal;
+unsigned int car_moving;
+
+unsigned int bell = 0;
+unsigned int door_lock_actu = 0;
+unsigned int brake_actu = 0;
+
+unsigned int input = 0;
+unsigned int output = 0;
 
 //The code segment which implements the decision logic
-inline void control_action(){
-
+void control_action(){
+    enum Inputs { DOS = 1, DSBF = 2, ER = 4, DC = 8, KIC = 16, DLC = 32, BP = 64, CM = 128 };
     // Put your control/decision logic code segments inside this function
     // This is the actual code whose execution time which is being measure
 
-
-
+    if ((input & 12) == 4) 
+        output = output | 1;
+    if ((input & (ER + DSBF)) == 4)
+        output |= 1;
+    if ((input & (KIC + DOS)) == 14)
+        output |= 2;
+    if ((input & (BP + CM)) == BP + CM)
+        output |= 4;
 }
 
 
-inline void read_inputs_from_ip_if(){
+void read_inputs_from_ip_if(){
 
     //place your input code here
     //to read the current state of the available sensors
-
+    printf("input signal: ");
+	scanf("%d", &input);
 
 }
 
-inline void write_output_to_op_if(){
+void write_output_to_op_if(){
 
     //place your output code here
     //to display/print the state of the 3 actuators (DLA/BELL/BA)
 
-
+    printf("output signal: %d\n", output);
 }
 
 
@@ -98,10 +120,10 @@ int main(int argc, char *argv[])
 
     timeDiff = diff(time1,time2); // compute the time difference
 
-    printf("Timer Resolution = %u nanoseconds \n ",timeres.tv_nsec);
-    printf("Calibrartion time = %u seconds and %u nanoseconds \n ", calibrationTime.tv_sec, calibrationTime.tv_nsec);
-    printf("The measured code took %u seconds and ", timeDiff.tv_sec - calibrationTime.tv_sec);
-    printf(" %u nano seconds to run \n", timeDiff.tv_nsec - calibrationTime.tv_nsec);
+    printf("Timer Resolution = %u nanoseconds \n ", (unsigned int) timeres.tv_nsec);
+    printf("Calibrartion time = %u seconds and %u nanoseconds \n ", (unsigned int) calibrationTime.tv_sec, (unsigned int) calibrationTime.tv_nsec);
+    printf("The measured code took %u seconds and ", (unsigned int) (timeDiff.tv_sec - calibrationTime.tv_sec));
+    printf(" %u nano seconds to run \n", (unsigned int) (timeDiff.tv_nsec - calibrationTime.tv_nsec));
 
     return 0;
 }

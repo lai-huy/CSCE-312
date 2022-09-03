@@ -19,7 +19,7 @@ build_4: clean
 	./main.out
 
 build_5: clean
-	gcc -std=c99 -g -Wall -Wextra -pedantic-errors -o main.out lab1_prob5_framework.c
+	gcc -o main.out lab1_prob5_framework.c
 	./main.out
 
 clean:
