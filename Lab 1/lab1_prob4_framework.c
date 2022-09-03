@@ -21,8 +21,6 @@ run this file as : gcc -std=c99 filename.c -o executableName
 
 #include <stdio.h> //This is useful to do i/o to test the code
 
-enum Inputs { DOS = 1, DSBF = 2, ER = 4, DC = 8, KIC = 16, DLC = 32, BP = 64, CM = 128 };
-
 unsigned int input = 0;
 unsigned int output = 0;
 
@@ -39,6 +37,7 @@ void write_output_to_op_if(){
     printf("output signal: %d\n", output);
 }
 
+enum Inputs { DOS = 1, DSBF = 2, ER = 4, DC = 8, KIC = 16, DLC = 32, BP = 64, CM = 128 };
 
 //The code segment which implements the decision logic
 void control_action(){
@@ -51,10 +50,13 @@ void control_action(){
 
     //if (engine_running && !doors_closed) bell = 1;
     if ((input & 12) == 4) 
-      output = output | 1;
-    if ((input & (ER + DSBF) == 4))
+        output = output | 1;
+    if ((input & (ER + DSBF)) == 4)
         output |= 1;
-
+    if ((input & (KIC + DOS)) == 14)
+        output |= 2;
+    if ((input & (BP + CM)) == BP + CM)
+        output |= 4;
 }
 
 /* ---     You should not have to modify anything below this line ---------*/
@@ -67,14 +69,14 @@ int main(int argc, char *argv[])
         The main control loop which keeps the system alive and responsive for ever,
         until the system is powered off 
     */
-    for (; ; )
-    {
-        input  = 0;
-        output = 0;
-        read_inputs_from_ip_if();
-        control_action();
-        write_output_to_op_if();
-    }
+    // for (; ; )
+    // {
+    //     input  = 0;
+    //     output = 0;
+    //     read_inputs_from_ip_if();
+    //     control_action();
+    //     write_output_to_op_if();
+    // }
     
 
     // code segment 2: 
@@ -82,25 +84,25 @@ int main(int argc, char *argv[])
         - 8 test cases for Problem 4.
     */
     
-    // int inputs[] = {0, 83, 250, 21, 189, 87, 255, 145};
-    // for (int i = 0; i < 8; i++) {
-    //     int bell = 0;
-    //     int dla  = 0;
-    //     int ba   = 0;
-    //     input    = inputs[i];
-    //     output   = 0;
+    int inputs[] = {0, 83, 250, 21, 189, 87, 255, 145};
+    for (int i = 0; i < 8; i++) {
+        int bell = 0;
+        int dla  = 0;
+        int ba   = 0;
+        input    = inputs[i];
+        output   = 0;
 
-    //     control_action();
+        control_action();
 
-    //     if (output & 1)
-    //         bell = 1;
-    //     if (output & 2)
-	//         dla = 1;
-    //     if (output & 4)
-    //         ba = 1;
+        if (output & 1)
+            bell = 1;
+        if (output & 2)
+	        dla = 1;
+        if (output & 4)
+            ba = 1;
 
-    //     printf("Case %d:  %d %d %d \n", i, bell, dla, ba);
-    // }
+        printf("Case %d:  %d %d %d \n", i, bell, dla, ba);
+    }
 
     return 0;
 }
