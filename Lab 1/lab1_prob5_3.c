@@ -39,64 +39,71 @@ unsigned int bell = 0;
 unsigned int door_lock_actu = 0;
 unsigned int brake_actu = 0;
 
-//The code segment which implements the decision logic
-void control_action(){
-    if (engine_running && !doors_closed) 
-       bell = 1;
-    
-    if (engine_running && !driver_seat_belt_fastened)
-        bell = 1;
+void read_inputs_from_ip_if() {
+    // 1. Provide your input code here
+    // This function should read the current state of the available sensors (8 in total)
 
-    if (!driver_on_seat && !key_in_car)
-        door_lock_actu = 1;
-    else
-        door_lock_actu = 0;
-    
-    if (brake_pedal && car_moving)
-        brake_actu = 1;
-    else
-        brake_actu = 0;
-}
-
-
-void read_inputs_from_ip_if(){
-
-    //place your input code here
-    //to read the current state of the available sensors
+    // Hint : You can use scanf to obtain inputs for the sensors
     printf("Is the Driver on the Seat?\t");
     scanf("%u", &driver_on_seat);
 
     printf("Is the Driver Seat Belt Fastened?\t");
     scanf("%u", &driver_seat_belt_fastened);
-    
+
     printf("Is the Enginer Running?\t");
     scanf("%u", &driver_seat_belt_fastened);
 
     printf("Are the Doors Closed?\t");
     scanf("%u", &driver_seat_belt_fastened);
-    
+
     printf("Is the Key in Car?\t");
     scanf("%u", &driver_seat_belt_fastened);
-    
+
     printf("Is the Door Lock Leaver activated?\t");
     scanf("%u", &driver_seat_belt_fastened);
-    
+
     printf("Is the Break Pedal activated?\t");
     scanf("%u", &driver_seat_belt_fastened);
 
     printf("Is the Driver Seat Belt Fastened?\t");
     scanf("%u", &driver_seat_belt_fastened);
-
 }
 
-void write_output_to_op_if(){
+void write_output_to_op_if() {
 
-    //place your output code here
-    //to display/print the state of the 3 actuators (DLA/BELL/BA)
+    // 2. Provide your output code here
+    // This function should display/print the state of the 3 actuators (DLA/BELL/BA)
+    printf("\n(BELL, DLA, BA):\t%u %u %u\n", bell, door_lock_actu, brake_actu);
+}
 
-    printf("\nBELL:\t%u\n", bell);
-    printf("DLA:\t%u\n", door_lock_actu);
-    printf("BA:\t%u\n", brake_actu);
+
+// The code segment which implements the decision logic
+void control_action() {
+
+    /*
+       The code given here sounds the bell when driver is on seat
+       AND hasn't closed the doors. (Requirement-2)
+
+       3. Provide your own code to do problems 3, which satisfies 5 requirements
+    */
+    if (engine_running && !doors_closed)
+        bell = 1;
+    else if (engine_running && !driver_seat_belt_fastened)
+        bell = 1;
+    else
+        bell = 0;
+
+    if (driver_on_seat || !key_in_car)
+        door_lock_actu = 1;
+    else if (driver_on_seat && door_lock_lever)
+        door_lock_actu = 1;
+    else
+        door_lock_actu = 0;
+
+    if (brake_pedal && car_moving)
+        brake_actu = 1;
+    else
+        brake_actu = 0;
 }
 
 

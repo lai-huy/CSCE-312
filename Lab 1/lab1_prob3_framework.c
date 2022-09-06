@@ -69,7 +69,7 @@ void write_output_to_op_if() {
 
     // 2. Provide your output code here
     // This function should display/print the state of the 3 actuators (DLA/BELL/BA)
-    printf("\n(BA, DLA, BELL):\t%u %u %u\n", brake_actu, door_lock_actu, bell);
+    printf("\n(BELL, DLA, BA):\t%u %u %u\n", bell, door_lock_actu, brake_actu);
 }
 
 
@@ -89,7 +89,7 @@ void control_action() {
     else
         bell = 0;
 
-    if (!(!driver_on_seat && key_in_car))
+    if (driver_on_seat || !key_in_car)
         door_lock_actu = 1;
     else if (driver_on_seat && door_lock_lever)
         door_lock_actu = 1;
