@@ -25,15 +25,11 @@ unsigned int input = 0;
 unsigned int output = 0;
 
 void read_inputs_from_ip_if() {
-    //This read the current state of the available sensors
-
     printf("input signal: ");
     scanf("%u", &input);
 }
 
 void write_output_to_op_if() {
-
-    //This display/print the state of the 3 actuators (DLA/BELL/BA)
     printf("output signal: %u\n", output);
 }
 
@@ -52,7 +48,7 @@ void control_action() {
     };
 
     if ((input & 12) == 4)
-        output|= 1;
+        output |= 1;
     if ((input & (ER + DSBF)) == ER)
         output |= 1;
     else

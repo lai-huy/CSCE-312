@@ -35,11 +35,6 @@ unsigned int door_lock_actu = 0;
 unsigned int brake_actu = 0;
 
 void read_inputs_from_ip_if() {
-
-    // 1. Provide your input code here
-    // This function should read the current state of the available sensors (8 in total)
-
-    // Hint : You can use scanf to obtain inputs for the sensors
     printf("Is the Driver on the Seat?\t");
     scanf("%u", &driver_on_seat);
 
@@ -66,22 +61,11 @@ void read_inputs_from_ip_if() {
 }
 
 void write_output_to_op_if() {
-
-    // 2. Provide your output code here
-    // This function should display/print the state of the 3 actuators (DLA/BELL/BA)
     printf("\n(BELL, DLA, BA):\t%u %u %u\n", bell, door_lock_actu, brake_actu);
 }
 
-
 // The code segment which implements the decision logic
 void control_action() {
-
-    /*
-       The code given here sounds the bell when driver is on seat
-       AND hasn't closed the doors. (Requirement-2)
-
-       3. Provide your own code to do problems 3, which satisfies 5 requirements
-    */
     if (engine_running && !doors_closed)
         bell = 1;
     if (engine_running && !driver_seat_belt_fastened)

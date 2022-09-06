@@ -30,45 +30,43 @@ unsigned int input = 0;
 unsigned int output = 0;
 
 void read_inputs_from_ip_if() {
-	//This read the current state of the available sensors
-
-	printf("input signal: ");
-	scanf("%d", &input);
+    printf("input signal: ");
+    scanf("%u", &input);
 }
 
 void write_output_to_op_if() {
-
-    //This display/print the state of the 3 actuators (DLA/BELL/BA)
-    printf("output signal: %d\n", output);
+    printf("output signal: %u\n", output);
 }
 
 
 //The code segment which implements the decision logic
 void control_action() {
-    /*
-       The code given here sounds the bell when driver is on seat
-       AND hasn't closed the doors. (Requirement-2)
-       Replace this code segment with your own code to do problems 3 and 4.
-    */
+    enum Inputs {
+        DOS = (unsigned int) 1,
+        DSBF = (unsigned int) 2,
+        ER = (unsigned int) 4,
+        DC = (unsigned int) 8,
+        KIC = (unsigned int) 16,
+        DLC = (unsigned int) 32,
+        BP = (unsigned int) 64,
+        CM = (unsigned int) 128
+    };
 
-    //if (engine_running && !doors_closed) bell = 1;
-    unsigned short DOS = 1, DSBF = 2, ER = 4, DC = 8, KIC = 16, DLC = 32, BP = 64, CM = 128;
-    
     if ((input & 12) == 4)
-        output = output | 1;
-    else if ((input & (ER + DSBF)) == (ER & ~DSBF))
+        output |= 1;
+    if ((input & (ER + DSBF)) == ER)
         output |= 1;
     else
         output &= ~1;
 
-    if ((input & (DOS + KIC)) == (DOS + ~KIC))
-        output |= 2;
-    else if ((input & (DOS + DLC)) == (DOS & DLC))
+    if ((input & (DOS + KIC)) == DOS)
+        output &= ~2;
+    if ((input & (DOS + DLC)) == (DOS + DLC))
         output |= 2;
     else
         output &= ~2;
 
-    if ((input & (BP + CM)) == (BP & CM))
+    if ((input & (BP + CM)) == (BP + CM))
         output |= 4;
     else
         output &= ~4;
@@ -80,32 +78,30 @@ void control_action() {
 /*timespec diff from
 http://www.guyrutenberg.com/2007/09/22/profiling-code-using-clock_gettime/
 */
-struct timespec diff(struct timespec start, struct timespec end)
-{
+struct timespec diff(struct timespec start, struct timespec end) {
     struct timespec temp;
     //the if condition handles time stamp end being smaller than than
     //time stamp start which could lead to negative time.
 
-    if ((end.tv_nsec-start.tv_nsec)<0) {
-        temp.tv_sec = end.tv_sec-start.tv_sec-1;
-        temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+    if ((end.tv_nsec - start.tv_nsec) < 0) {
+        temp.tv_sec = end.tv_sec - start.tv_sec - 1;
+        temp.tv_nsec = 1000000000 + end.tv_nsec - start.tv_nsec;
     } else {
-        temp.tv_sec = end.tv_sec-start.tv_sec;
-        temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+        temp.tv_sec = end.tv_sec - start.tv_sec;
+        temp.tv_nsec = end.tv_nsec - start.tv_nsec;
     }
     return temp;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     unsigned int cpu_mhz;
     unsigned long long int begin_time, end_time;
-    struct timespec timeDiff,timeres;
+    struct timespec timeDiff, timeres;
     struct timespec time1, time2, calibrationTime;
 
     clock_gettime(CLOCKNAME, &time1);
     clock_gettime(CLOCKNAME, &time2);
-    calibrationTime = diff(time1,time2); //calibration for overhead of the function calls
+    calibrationTime = diff(time1, time2); //calibration for overhead of the function calls
     clock_getres(CLOCKNAME, &timeres);  // get the clock resolution data
 
     read_inputs_from_ip_if(); // get the sensor inputs
@@ -116,7 +112,7 @@ int main(int argc, char *argv[])
 
     write_output_to_op_if();    // output the values of the actuators
 
-    timeDiff = diff(time1,time2); // compute the time difference
+    timeDiff = diff(time1, time2); // compute the time difference
 
     printf("Timer Resolution = %u nanoseconds \n ", (unsigned int) timeres.tv_nsec);
     printf("Calibrartion time = %u seconds and %u nanoseconds \n ", (unsigned int) calibrationTime.tv_sec, (unsigned int) calibrationTime.tv_nsec);

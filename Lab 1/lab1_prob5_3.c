@@ -10,10 +10,6 @@
   run this file as: gcc FileName.c -o ExecutableName -lrt
 
 */
-
-
-
-
 #include <stdio.h>
 #include <time.h>
 
@@ -40,10 +36,6 @@ unsigned int door_lock_actu = 0;
 unsigned int brake_actu = 0;
 
 void read_inputs_from_ip_if() {
-    // 1. Provide your input code here
-    // This function should read the current state of the available sensors (8 in total)
-
-    // Hint : You can use scanf to obtain inputs for the sensors
     printf("Is the Driver on the Seat?\t");
     scanf("%u", &driver_on_seat);
 
@@ -51,51 +43,40 @@ void read_inputs_from_ip_if() {
     scanf("%u", &driver_seat_belt_fastened);
 
     printf("Is the Enginer Running?\t");
-    scanf("%u", &driver_seat_belt_fastened);
+    scanf("%u", &engine_running);
 
     printf("Are the Doors Closed?\t");
-    scanf("%u", &driver_seat_belt_fastened);
+    scanf("%u", &doors_closed);
 
     printf("Is the Key in Car?\t");
-    scanf("%u", &driver_seat_belt_fastened);
+    scanf("%u", &key_in_car);
 
     printf("Is the Door Lock Leaver activated?\t");
-    scanf("%u", &driver_seat_belt_fastened);
+    scanf("%u", &door_lock_lever);
 
     printf("Is the Break Pedal activated?\t");
-    scanf("%u", &driver_seat_belt_fastened);
+    scanf("%u", &brake_pedal);
 
-    printf("Is the Driver Seat Belt Fastened?\t");
-    scanf("%u", &driver_seat_belt_fastened);
+    printf("Is the Car Moving?\t");
+    scanf("%u", &car_moving);
 }
 
 void write_output_to_op_if() {
-
-    // 2. Provide your output code here
-    // This function should display/print the state of the 3 actuators (DLA/BELL/BA)
     printf("\n(BELL, DLA, BA):\t%u %u %u\n", bell, door_lock_actu, brake_actu);
 }
 
-
 // The code segment which implements the decision logic
 void control_action() {
-
-    /*
-       The code given here sounds the bell when driver is on seat
-       AND hasn't closed the doors. (Requirement-2)
-
-       3. Provide your own code to do problems 3, which satisfies 5 requirements
-    */
     if (engine_running && !doors_closed)
         bell = 1;
-    else if (engine_running && !driver_seat_belt_fastened)
+    if (engine_running && !driver_seat_belt_fastened)
         bell = 1;
     else
         bell = 0;
 
-    if (driver_on_seat || !key_in_car)
-        door_lock_actu = 1;
-    else if (driver_on_seat && door_lock_lever)
+    if (!driver_on_seat && key_in_car)
+        door_lock_actu = 0;
+    if (driver_on_seat && door_lock_lever)
         door_lock_actu = 1;
     else
         door_lock_actu = 0;
@@ -112,32 +93,30 @@ void control_action() {
 /*timespec diff from
 http://www.guyrutenberg.com/2007/09/22/profiling-code-using-clock_gettime/
 */
-struct timespec diff(struct timespec start, struct timespec end)
-{
+struct timespec diff(struct timespec start, struct timespec end) {
     struct timespec temp;
     //the if condition handles time stamp end being smaller than than
     //time stamp start which could lead to negative time.
 
-    if ((end.tv_nsec-start.tv_nsec)<0) {
-        temp.tv_sec = end.tv_sec-start.tv_sec-1;
-        temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+    if ((end.tv_nsec - start.tv_nsec) < 0) {
+        temp.tv_sec = end.tv_sec - start.tv_sec - 1;
+        temp.tv_nsec = 1000000000 + end.tv_nsec - start.tv_nsec;
     } else {
-        temp.tv_sec = end.tv_sec-start.tv_sec;
-        temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+        temp.tv_sec = end.tv_sec - start.tv_sec;
+        temp.tv_nsec = end.tv_nsec - start.tv_nsec;
     }
     return temp;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     unsigned int cpu_mhz;
     unsigned long long int begin_time, end_time;
-    struct timespec timeDiff,timeres;
+    struct timespec timeDiff, timeres;
     struct timespec time1, time2, calibrationTime;
 
     clock_gettime(CLOCKNAME, &time1);
     clock_gettime(CLOCKNAME, &time2);
-    calibrationTime = diff(time1,time2); //calibration for overhead of the function calls
+    calibrationTime = diff(time1, time2); //calibration for overhead of the function calls
     clock_getres(CLOCKNAME, &timeres);  // get the clock resolution data
 
     read_inputs_from_ip_if(); // get the sensor inputs
@@ -148,7 +127,7 @@ int main(int argc, char *argv[])
 
     write_output_to_op_if();    // output the values of the actuators
 
-    timeDiff = diff(time1,time2); // compute the time difference
+    timeDiff = diff(time1, time2); // compute the time difference
 
     printf("Timer Resolution = %u nanoseconds \n ", (unsigned int) timeres.tv_nsec);
     printf("Calibrartion time = %u seconds and %u nanoseconds \n ", (unsigned int) calibrationTime.tv_sec, (unsigned int) calibrationTime.tv_nsec);
