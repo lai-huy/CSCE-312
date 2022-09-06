@@ -34,30 +34,30 @@ unsigned int bell = 0;
 unsigned int door_lock_actu = 0;
 unsigned int brake_actu = 0;
 
-void read_inputs_from_ip_if(){
-	
-	// 1. Provide your input code here
-	// This function should read the current state of the available sensors (8 in total)
+void read_inputs_from_ip_if() {
 
-	// Hint : You can use scanf to obtain inputs for the sensors
+    // 1. Provide your input code here
+    // This function should read the current state of the available sensors (8 in total)
+
+    // Hint : You can use scanf to obtain inputs for the sensors
     printf("Is the Driver on the Seat?\t");
     scanf("%u", &driver_on_seat);
 
     printf("Is the Driver Seat Belt Fastened?\t");
     scanf("%u", &driver_seat_belt_fastened);
-    
+
     printf("Is the Enginer Running?\t");
     scanf("%u", &driver_seat_belt_fastened);
 
     printf("Are the Doors Closed?\t");
     scanf("%u", &driver_seat_belt_fastened);
-    
+
     printf("Is the Key in Car?\t");
     scanf("%u", &driver_seat_belt_fastened);
-    
+
     printf("Is the Door Lock Leaver activated?\t");
     scanf("%u", &driver_seat_belt_fastened);
-    
+
     printf("Is the Break Pedal activated?\t");
     scanf("%u", &driver_seat_belt_fastened);
 
@@ -65,36 +65,37 @@ void read_inputs_from_ip_if(){
     scanf("%u", &driver_seat_belt_fastened);
 }
 
-void write_output_to_op_if(){
+void write_output_to_op_if() {
 
     // 2. Provide your output code here
     // This function should display/print the state of the 3 actuators (DLA/BELL/BA)
-    printf("\nBELL:\t%u\n", bell);
-    printf("DLA:\t%u\n", door_lock_actu);
-    printf("BA:\t%u\n", brake_actu);
+    printf("\n(BA, DLA, BELL):\t%u %u %u\n", brake_actu, door_lock_actu, bell);
 }
 
 
 // The code segment which implements the decision logic
-void control_action(){
+void control_action() {
 
     /*
        The code given here sounds the bell when driver is on seat
        AND hasn't closed the doors. (Requirement-2)
-      
-       3. Provide your own code to do problems 3, which satisfies 5 requirements 
-    */
-    if (engine_running && !doors_closed) 
-       bell = 1;
-    
-    if (engine_running && !driver_seat_belt_fastened)
-        bell = 1;
 
-    if (!driver_on_seat && !key_in_car)
+       3. Provide your own code to do problems 3, which satisfies 5 requirements
+    */
+    if (engine_running && !doors_closed)
+        bell = 1;
+    else if (engine_running && !driver_seat_belt_fastened)
+        bell = 1;
+    else
+        bell = 0;
+
+    if (!(!driver_on_seat && key_in_car))
+        door_lock_actu = 1;
+    else if (driver_on_seat && door_lock_lever)
         door_lock_actu = 1;
     else
         door_lock_actu = 0;
-    
+
     if (brake_pedal && car_moving)
         brake_actu = 1;
     else
@@ -104,8 +105,7 @@ void control_action(){
 
 /* ---     You do not need to modify codes shown below  ---- */
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
 
     // code segment 1
     /*
@@ -122,32 +122,32 @@ int main(int argc, char *argv[])
     //     control_action();
     //     write_output_to_op_if();
     // }
- 
-    
+
+
     // code segment 2
     /*
         Below is 8 different test cases provided you for testing purposes.
         Please uncomment this code segment 2 and comment out the code segment 1
         and run the file using command shown below
         gcc -std=c99 -o test lab1_prob3.c
-        4. Please provide the screenshot of the output obtained from running this code segment 2 
-        and your code written from 1-3 to the lab report 
+        4. Please provide the screenshot of the output obtained from running this code segment 2
+        and your code written from 1-3 to the lab report
     */
 
-    int test[8][8] = {  {0, 0, 0, 0, 0, 0, 0, 0}, 
-                        {1, 1, 0, 0, 1, 0, 1, 0}, 
-                        {0, 1, 0, 1, 1, 1, 1, 1}, 
-                        {1, 0, 1, 0, 1, 0, 0, 0}, 
-                        {1, 0, 1, 1, 1, 1, 0, 1}, 
-                        {1, 1, 1, 0, 1, 0, 1, 0}, 
-                        {1, 1, 1, 1, 1, 1, 1, 1}, 
-                        {1, 0, 0, 0, 1, 0, 0, 1} };
+    int test[8][8] = {{0, 0, 0, 0, 0, 0, 0, 0},
+                        {1, 1, 0, 0, 1, 0, 1, 0},
+                        {0, 1, 0, 1, 1, 1, 1, 1},
+                        {1, 0, 1, 0, 1, 0, 0, 0},
+                        {1, 0, 1, 1, 1, 1, 0, 1},
+                        {1, 1, 1, 0, 1, 0, 1, 0},
+                        {1, 1, 1, 1, 1, 1, 1, 1},
+                        {1, 0, 0, 0, 1, 0, 0, 1}};
     for (int i = 0; i < 8; i++) {
         bell = 0;
         door_lock_actu = 0;
         brake_actu = 0;
 
-        driver_on_seat = test[i][0]; 
+        driver_on_seat = test[i][0];
         driver_seat_belt_fastened = test[i][1];
         engine_running = test[i][2];
         doors_closed = test[i][3];
@@ -155,11 +155,11 @@ int main(int argc, char *argv[])
         door_lock_lever = test[i][5];
         brake_pedal = test[i][6];
         car_moving = test[i][7];
-        
+
         control_action();
         printf("Test %d: ", i);
-        printf("\n %d %d %d %d %d %d %d %d ", driver_on_seat, driver_seat_belt_fastened, 
-                                            engine_running, doors_closed, key_in_car, 
+        printf("\n %d %d %d %d %d %d %d %d ", driver_on_seat, driver_seat_belt_fastened,
+                                            engine_running, doors_closed, key_in_car,
                                             door_lock_lever, brake_pedal, car_moving);
         write_output_to_op_if();
     }

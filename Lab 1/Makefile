@@ -3,19 +3,19 @@ run: all
 all: build_1 build_2
 
 build_1: clean
-	gcc -std=c99 -g -Wall -Wextra -pedantic-errors -o main.out lab1_prob1.c
+	gcc -std=c99 -o main.out lab1_prob1.c
 	./main.out
 
 build_2: clean
-	gcc -std=c99 -g -Wall -Wextra -pedantic-errors -o main.out lab1_prob2.c
+	gcc -std=c99 -o main.out lab1_prob2.c
 	./main.out
 
 build_3: clean
-	gcc -std=c99 -g -Wall -Wextra -pedantic-errors -o main.out lab1_prob3_framework.c
+	gcc -std=c99 -o main.out lab1_prob3_framework.c
 	./main.out
 
 build_4: clean
-	gcc -std=c99 -g -Wall -Wextra -pedantic-errors -o main.out lab1_prob4_framework.c
+	gcc -std=c99 -o main.out lab1_prob4_framework.c
 	./main.out
 
 build_5: clean
