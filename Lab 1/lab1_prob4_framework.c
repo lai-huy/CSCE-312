@@ -37,11 +37,9 @@ void write_output_to_op_if(){
     printf("output signal: %d\n", output);
 }
 
-enum Inputs { DOS = 1, DSBF = 2, ER = 4, DC = 8, KIC = 16, DLC = 32, BP = 64, CM = 128 };
 
 //The code segment which implements the decision logic
 void control_action(){
-
     /*
        The code given here sounds the bell when driver is on seat
        AND hasn't closed the doors. (Requirement-2)
@@ -49,14 +47,26 @@ void control_action(){
     */
 
     //if (engine_running && !doors_closed) bell = 1;
-    if ((input & 12) == 4) 
+    unsigned short DOS = 1, DSBF = 2, ER = 4, DC = 8, KIC = 16, DLC = 32, BP = 64, CM = 128;
+    
+    if ((input & 12) == 4)
         output = output | 1;
-    if ((input & (ER + DSBF)) == 4)
+    else if ((input & (ER + DSBF)) == (ER & ~DSBF))
         output |= 1;
-    if ((input & (KIC + DOS)) == 14)
+    else
+        output &= ~1;
+
+    if ((input & (DOS + KIC)) == (DOS + ~KIC))
         output |= 2;
-    if ((input & (BP + CM)) == BP + CM)
+    else if ((input & (DOS + DLC)) == (DOS & DLC))
+        output |= 2;
+    else
+        output &= ~2;
+
+    if ((input & (BP + CM)) == (BP & CM))
         output |= 4;
+    else
+        output &= ~4;
 }
 
 /* ---     You should not have to modify anything below this line ---------*/
