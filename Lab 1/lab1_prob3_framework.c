@@ -47,22 +47,22 @@ void read_inputs_from_ip_if() {
     scanf("%u", &driver_seat_belt_fastened);
 
     printf("Is the Enginer Running?\t");
-    scanf("%u", &driver_seat_belt_fastened);
+    scanf("%u", &engine_running);
 
     printf("Are the Doors Closed?\t");
-    scanf("%u", &driver_seat_belt_fastened);
+    scanf("%u", &doors_closed);
 
     printf("Is the Key in Car?\t");
-    scanf("%u", &driver_seat_belt_fastened);
+    scanf("%u", &key_in_car);
 
     printf("Is the Door Lock Leaver activated?\t");
-    scanf("%u", &driver_seat_belt_fastened);
+    scanf("%u", &door_lock_lever);
 
     printf("Is the Break Pedal activated?\t");
-    scanf("%u", &driver_seat_belt_fastened);
+    scanf("%u", &brake_pedal);
 
-    printf("Is the Driver Seat Belt Fastened?\t");
-    scanf("%u", &driver_seat_belt_fastened);
+    printf("Is the Car Moving?\t");
+    scanf("%u", &car_moving);
 }
 
 void write_output_to_op_if() {
@@ -84,14 +84,14 @@ void control_action() {
     */
     if (engine_running && !doors_closed)
         bell = 1;
-    else if (engine_running && !driver_seat_belt_fastened)
+    if (engine_running && !driver_seat_belt_fastened)
         bell = 1;
     else
         bell = 0;
 
-    if (driver_on_seat || !key_in_car)
-        door_lock_actu = 1;
-    else if (driver_on_seat && door_lock_lever)
+    if (!driver_on_seat && key_in_car)
+        door_lock_actu = 0;
+    if (driver_on_seat && door_lock_lever)
         door_lock_actu = 1;
     else
         door_lock_actu = 0;

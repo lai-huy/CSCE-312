@@ -24,46 +24,48 @@ run this file as : gcc -std=c99 filename.c -o executableName
 unsigned int input = 0;
 unsigned int output = 0;
 
-void read_inputs_from_ip_if(){
-	//This read the current state of the available sensors
+void read_inputs_from_ip_if() {
+    //This read the current state of the available sensors
 
-	printf("input signal: ");
-	scanf("%d", &input);
+    printf("input signal: ");
+    scanf("%u", &input);
 }
 
-void write_output_to_op_if(){
+void write_output_to_op_if() {
 
     //This display/print the state of the 3 actuators (DLA/BELL/BA)
-    printf("output signal: %d\n", output);
+    printf("output signal: %u\n", output);
 }
 
 
 //The code segment which implements the decision logic
-void control_action(){
-    /*
-       The code given here sounds the bell when driver is on seat
-       AND hasn't closed the doors. (Requirement-2)
-       Replace this code segment with your own code to do problems 3 and 4.
-    */
+void control_action() {
+    enum Inputs {
+        DOS = (unsigned int) 1,
+        DSBF = (unsigned int) 2,
+        ER = (unsigned int) 4,
+        DC = (unsigned int) 8,
+        KIC = (unsigned int) 16,
+        DLC = (unsigned int) 32,
+        BP = (unsigned int) 64,
+        CM = (unsigned int) 128
+    };
 
-    //if (engine_running && !doors_closed) bell = 1;
-    unsigned short DOS = 1, DSBF = 2, ER = 4, DC = 8, KIC = 16, DLC = 32, BP = 64, CM = 128;
-    
     if ((input & 12) == 4)
-        output = output | 1;
-    else if ((input & (ER + DSBF)) == (ER & ~DSBF))
+        output|= 1;
+    if ((input & (ER + DSBF)) == ER)
         output |= 1;
     else
         output &= ~1;
 
-    if ((input & (DOS + KIC)) == (DOS + ~KIC))
-        output |= 2;
-    else if ((input & (DOS + DLC)) == (DOS & DLC))
+    if ((input & (DOS + KIC)) == DOS)
+        output &= ~2;
+    if ((input & (DOS + DLC)) == (DOS + DLC))
         output |= 2;
     else
         output &= ~2;
 
-    if ((input & (BP + CM)) == (BP & CM))
+    if ((input & (BP + CM)) == (BP + CM))
         output |= 4;
     else
         output &= ~4;
@@ -71,13 +73,12 @@ void control_action(){
 
 /* ---     You should not have to modify anything below this line ---------*/
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
 
     // code segment 1
     /*
         The main control loop which keeps the system alive and responsive for ever,
-        until the system is powered off 
+        until the system is powered off
     */
     // for (; ; )
     // {
@@ -87,27 +88,27 @@ int main(int argc, char *argv[])
     //     control_action();
     //     write_output_to_op_if();
     // }
-    
+
 
     // code segment 2: 
     /*
         - 8 test cases for Problem 4.
     */
-    
+
     int inputs[] = {0, 83, 250, 21, 189, 87, 255, 145};
     for (int i = 0; i < 8; i++) {
         int bell = 0;
-        int dla  = 0;
-        int ba   = 0;
-        input    = inputs[i];
-        output   = 0;
+        int dla = 0;
+        int ba = 0;
+        input = inputs[i];
+        output = 0;
 
         control_action();
 
         if (output & 1)
             bell = 1;
         if (output & 2)
-	        dla = 1;
+            dla = 1;
         if (output & 4)
             ba = 1;
 
