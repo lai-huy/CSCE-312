@@ -1,4 +1,4 @@
-\documentclass[12pt]{report}
+\documentclass[fleqn,12pt]{article}
 
 \usepackage{times}
 \usepackage{amsmath}
@@ -9,31 +9,40 @@
 \usepackage[shortlabels]{enumitem}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
+\usepackage{fancyvrb}
+\usepackage{minted}
 \usepackage{graphicx}
-\graphicspath{ {./Images/} }
+\usepackage{fancyhdr}
+\usepackage[affil-it]{authblk}
+\usepackage[headsep=14pt,headheight=14pt]{geometry}
 
 \hypersetup{
-    pdftitle={Lab 1}
+    pdftitle={Problem Set I}
 }
 
 \setlength{\parskip}{.1in}
+\setlength{\headheight}{15pt}
+\setlength{\topmargin}{0pt}
+
+\pagestyle{fancy}
+\lhead{CSCE 312: Computer Organization}
+\rhead{Texas A\&M University}
+\cfoot{\thepage}
+
+\title{\vspace{-2.5cm}Lab 1 Report}
+\author{\vspace{-0.2cm} Huy Quang Lai\\132000359}
+\affil{Texas A\&M University}
+\date{\vspace{-0.5cm}6 September 2022}
 
 \begin{document}
-
+\maketitle
 \begin{center}
+\rule{\textwidth}{.1pt}
 {\large
-CSCE 312-505\\
-Computer Organization \\
-6 September 2022 \\
-Lab I Report}
+An Aggie does not lie, cheat or steal.\\
+Nor does an Aggie tolerate those who do.
+}
 \end{center}
-\rule{6in}{.1pt}
-\begin{center}
-{\large
-On my honor, as an Aggie, I have neither given nor received unauthorized aid on this academic work.\\
-HUY QUANG LAI}
-\end{center}
-\rule{6in}{.1pt}
 
 \input{problem1}
 \input{problem2}
