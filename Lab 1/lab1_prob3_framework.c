@@ -34,7 +34,7 @@ unsigned int bell = 0;
 unsigned int door_lock_actu = 0;
 unsigned int brake_actu = 0;
 
-void read_inputs_from_ip_if() {
+void read_inputs_from_ip_if() {     
     printf("Is the Driver on the Seat?\t");
     scanf("%u", &driver_on_seat);
 
