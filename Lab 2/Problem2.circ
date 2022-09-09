@@ -115,22 +115,24 @@
     <comp lib="1" loc="(480,590)" name="OR Gate">
       <a name="inputs" val="16"/>
     </comp>
-    <comp lib="5" loc="(790,180)" name="7-Segment Display"/>
+    <comp lib="5" loc="(810,180)" name="7-Segment Display">
+      <a name="color" val="#ff0000"/>
+    </comp>
     <comp lib="6" loc="(460,217)" name="Text">
       <a name="text" val="Encoder"/>
     </comp>
-    <comp lib="6" loc="(493,174)" name="Text">
+    <comp lib="6" loc="(513,174)" name="Text">
       <a name="text" val="Decoder"/>
     </comp>
-    <comp lib="6" loc="(593,53)" name="Text">
+    <comp lib="6" loc="(613,53)" name="Text">
       <a name="text" val="Determine if a Button"/>
     </comp>
-    <comp lib="6" loc="(594,71)" name="Text">
+    <comp lib="6" loc="(614,71)" name="Text">
       <a name="text" val="is being pressed"/>
     </comp>
     <comp loc="(460,100)" name="Encode"/>
-    <comp loc="(510,90)" name="Decode"/>
-    <comp loc="(610,90)" name="HeptAND"/>
+    <comp loc="(530,90)" name="Decode"/>
+    <comp loc="(630,90)" name="HeptAND"/>
     <wire from="(100,100)" to="(160,100)"/>
     <wire from="(100,130)" to="(180,130)"/>
     <wire from="(100,160)" to="(200,160)"/>
@@ -210,40 +212,40 @@
     <wire from="(420,190)" to="(430,190)"/>
     <wire from="(420,490)" to="(420,670)"/>
     <wire from="(420,670)" to="(430,670)"/>
-    <wire from="(460,100)" to="(480,100)"/>
-    <wire from="(460,110)" to="(480,110)"/>
-    <wire from="(460,120)" to="(480,120)"/>
-    <wire from="(460,130)" to="(480,130)"/>
-    <wire from="(480,590)" to="(530,590)"/>
-    <wire from="(510,100)" to="(580,100)"/>
-    <wire from="(510,110)" to="(580,110)"/>
-    <wire from="(510,120)" to="(580,120)"/>
-    <wire from="(510,130)" to="(580,130)"/>
-    <wire from="(510,140)" to="(580,140)"/>
-    <wire from="(510,150)" to="(580,150)"/>
-    <wire from="(510,90)" to="(580,90)"/>
-    <wire from="(530,160)" to="(530,590)"/>
-    <wire from="(530,160)" to="(580,160)"/>
-    <wire from="(610,100)" to="(820,100)"/>
-    <wire from="(610,110)" to="(830,110)"/>
-    <wire from="(610,120)" to="(770,120)"/>
-    <wire from="(610,130)" to="(760,130)"/>
-    <wire from="(610,140)" to="(800,140)"/>
-    <wire from="(610,150)" to="(790,150)"/>
-    <wire from="(610,90)" to="(810,90)"/>
-    <wire from="(760,130)" to="(760,250)"/>
-    <wire from="(760,250)" to="(790,250)"/>
-    <wire from="(770,120)" to="(770,260)"/>
-    <wire from="(770,260)" to="(800,260)"/>
-    <wire from="(790,150)" to="(790,180)"/>
-    <wire from="(790,240)" to="(790,250)"/>
-    <wire from="(800,140)" to="(800,180)"/>
-    <wire from="(800,240)" to="(800,260)"/>
+    <wire from="(460,100)" to="(500,100)"/>
+    <wire from="(460,110)" to="(500,110)"/>
+    <wire from="(460,120)" to="(500,120)"/>
+    <wire from="(460,130)" to="(500,130)"/>
+    <wire from="(480,590)" to="(550,590)"/>
+    <wire from="(530,100)" to="(600,100)"/>
+    <wire from="(530,110)" to="(600,110)"/>
+    <wire from="(530,120)" to="(600,120)"/>
+    <wire from="(530,130)" to="(600,130)"/>
+    <wire from="(530,140)" to="(600,140)"/>
+    <wire from="(530,150)" to="(600,150)"/>
+    <wire from="(530,90)" to="(600,90)"/>
+    <wire from="(550,160)" to="(550,590)"/>
+    <wire from="(550,160)" to="(600,160)"/>
+    <wire from="(630,100)" to="(840,100)"/>
+    <wire from="(630,110)" to="(850,110)"/>
+    <wire from="(630,120)" to="(790,120)"/>
+    <wire from="(630,130)" to="(780,130)"/>
+    <wire from="(630,140)" to="(820,140)"/>
+    <wire from="(630,150)" to="(810,150)"/>
+    <wire from="(630,90)" to="(830,90)"/>
+    <wire from="(780,130)" to="(780,250)"/>
+    <wire from="(780,250)" to="(810,250)"/>
+    <wire from="(790,120)" to="(790,260)"/>
+    <wire from="(790,260)" to="(820,260)"/>
+    <wire from="(810,150)" to="(810,180)"/>
     <wire from="(810,240)" to="(810,250)"/>
-    <wire from="(810,250)" to="(830,250)"/>
-    <wire from="(810,90)" to="(810,180)"/>
-    <wire from="(820,100)" to="(820,180)"/>
-    <wire from="(830,110)" to="(830,250)"/>
+    <wire from="(820,140)" to="(820,180)"/>
+    <wire from="(820,240)" to="(820,260)"/>
+    <wire from="(830,240)" to="(830,250)"/>
+    <wire from="(830,250)" to="(850,250)"/>
+    <wire from="(830,90)" to="(830,180)"/>
+    <wire from="(840,100)" to="(840,180)"/>
+    <wire from="(850,110)" to="(850,250)"/>
   </circuit>
   <circuit name="Decode">
     <a name="circuit" val="Decode"/>
