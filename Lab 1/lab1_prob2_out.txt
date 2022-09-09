@@ -1,7 +1,0 @@
-Size of unsigned int is 4.
-Size of double is 8.
-Size of long is 8.
-Size of long long is 8.
-Size of char is 1.
-Size of float is 4.
-Size of struct timeval is 16.
