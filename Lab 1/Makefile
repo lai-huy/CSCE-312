@@ -26,4 +26,4 @@ build_5: clean
 	./main.out
 
 clean:
-	rm -f *.out *.debug
+	rm -f *.out *.debug *.txt
