@@ -23,27 +23,38 @@ run this file as: gcc FileName.c -o ExecutableName -lrt
 #define CLOCKNAME CLOCK_PROCESS_CPUTIME_ID
 #endif
 
+unsigned int input;
+unsigned int output;
 
-inline void read_inputs_from_ip_if() {
-
-    //place your input code here
-    //to read the current state of the available sensors
-
+void read_inputs_from_ip_if() {
+    printf("input signal: ");
+    scanf("%d", &input);
 }
 
-inline void write_output_to_op_if() {
-
-    //place your output code here
-    //to display/print the state of the 3 actuators (DLA/BELL/BA)
-
+void write_output_to_op_if() {
+    printf("output signal: %d\n", output);
 }
-
 
 //The code segment which implements the decision logic
-inline void control_action() {
+void control_action() {
+    //Requirement 1, 2, 3
+    switch (input & 0xf) {
+    case 5:
+    case 7:
+    case 13:
+        output = 0x1;
+    }
 
-    //3. Put your control/decision logic code segments inside this function
-    // This is the actual code whose execution time which is being measure
+    //Requirement 4
+    switch (input & 0x31) {
+    case 32:
+    case 49:
+        output = output | 0x2;
+    }
+
+    //Requirement 5
+    if ((input & 0xc0) == 0xc0)
+        output = output | 0x4;
 
 }
 
@@ -89,10 +100,10 @@ int main(int argc, char* argv[]) {
 
     timeDiff = diff(time1, time2); // compute the time difference
 
-    printf("Timer Resolution = %u nanoseconds \n ", timeres.tv_nsec);
-    printf("Calibrartion time = %u seconds and %u nanoseconds \n ", calibrationTime.tv_sec, calibrationTime.tv_nsec);
-    printf("The measured code took %u seconds and ", timeDiff.tv_sec - calibrationTime.tv_sec);
-    printf(" %u nano seconds to run \n", timeDiff.tv_nsec - calibrationTime.tv_nsec);
+    printf("Timer Resolution = %ld nanoseconds \n ", timeres.tv_nsec);
+    printf("Calibrartion time = %ld seconds and %ld nanoseconds \n ", calibrationTime.tv_sec, calibrationTime.tv_nsec);
+    printf("The measured code took %ld seconds and ", timeDiff.tv_sec - calibrationTime.tv_sec);
+    printf(" %ld nano seconds to run \n", timeDiff.tv_nsec - calibrationTime.tv_nsec);
 
     return 0;
 }
