@@ -1,0 +1,108 @@
+\section*{Chapter 4}
+\subsection*{4.2}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{Images/4.2.png}
+    \caption{Timing Diagram}
+\end{figure}
+
+\clearpage
+\subsection*{4.3}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{Images/4.3.png}
+    \caption{4-bit Register}
+\end{figure}
+
+\subsection*{4.10}
+The maximum time delay for both the full adder and the half adder is 3 ns. Therefore, eight adders will have a total delay of 24 ns. However, the carry out of a half-adder will be correct after 2ns instead of 3ns. Since a half adder can be used to add the least significant bit of the numbers, the 8-bit sum will be correct by 23 ns.
+
+\subsection*{4.13}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{Images/4.13.png}
+    \caption{Quad 8-bit adder}
+\end{figure}
+
+\clearpage
+\subsection*{4.21}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{Images/4.21.png}
+    \caption{16-bit Magnitude Comparator}
+\end{figure}
+
+\subsection*{4.30}
+\begin{enumerate}[(a)]
+    \item $11100000_2=32_{10}$
+    \item $01111111_2=127_{10}$
+    \item $11110000_2=-16_{10}$
+    \item $11000000_2=-64_{10}$
+    \item $11100000_2=-32_{10}$
+\end{enumerate}
+
+\subsection*{4.33}
+\begin{enumerate}[(a)]
+    \item $29_{10}=00011101_2$
+    \item $100_{10}=01100100_2$
+    \item $125_{10}=01111101_2$
+    \item $-29_{10}=11100011_2$
+    \item $-100_{10}=10011100_2$
+    \item $-125_{10}=10000011_2$
+    \item $-2_{10}=11111110_2$
+\end{enumerate}
+
+\clearpage
+\subsection*{4.40}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{Images/4.40.png}
+    \caption{Arithmetic Logic Unit}
+\end{figure}
+
+\noindent
+Operation of the AL-Extender is as follows.\\
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    $x$ & $y$ & $z$ & S             & $a_o$        & $b_o$ & $c_o$ \\ \hline
+    0   & 0   & 0   & $A-B$         & $a$          & $b'$  & 1      \\ \hline
+    0   & 0   & 1   & $A+B$         & $a$          & $b$   & 0      \\ \hline
+    0   & 1   & 0   & $A*8$         & $a<<3$       & 0     & 0      \\ \hline
+    0   & 1   & 0   & $A/8$         & $a>>3$       & 0     & 0      \\ \hline
+    1   & 0   & 0   & $A$ NAND $B$  & $a$ NAND $b$ & 0     & 0      \\ \hline
+    1   & 0   & 1   & $A$ XOR $B$   & $a$ XOR $b$  & 0     & 0      \\ \hline
+    1   & 1   & 0   & Reverse $A$   & $a$ reversed & 0     & 0      \\ \hline
+    1   & 1   & 1   & NOT $A$       & NOT $a$      & 0     & 0      \\ \hline
+    \end{tabular}
+    \caption{AL Extender Functionality}
+    \label{tab:my_label}
+\end{table}
+
+\clearpage
+\subsection*{4.62}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{Images/4.62.png}
+    \caption{$4\times4$ Register File}
+\end{figure}
+
+\subsection*{4.64}
+\begin{enumerate}[(a)]
+    \item $W_{data}=1110,W_{addr}=11,W_{en}=1,R_{addr}=11,R_{en}=1$
+    \item Before rising edge.\\
+    $R_0=0101$\\
+    $R_1=0101$\\
+    $R_2=0101$\\
+    $R_3=0101$\\
+    $R_{data}=0101$
+    
+    \noindent
+    After rising edge.\\
+    $R_0=0101$\\
+    $R_1=0101$\\
+    $R_2=0101$\\
+    $R_3=1110$\\
+    $R_{data}=1110$\\
+\end{enumerate}

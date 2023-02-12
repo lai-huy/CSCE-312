@@ -1,0 +1,182 @@
+\section*{Chapter 2}
+\subsection*{2.12 $F=AB+C+D$}
+\begin{enumerate}[(a)]
+    \item $F(1110)=1$
+    \item $F(0110)=1$
+    \item $F(1100)=1$
+    \item $F(1000)=0$
+\end{enumerate}
+
+\subsection*{2.18}
+\begin{enumerate}[(a)]
+    \item $F=a'b'+b'c$
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[width=0.5\textwidth]{Images/2.18a.png}
+        \caption{$F=a'b'+b'c$}
+    \end{figure}
+    
+    \clearpage
+    \item $F=ab+be+cd+de$
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[width=0.5\textwidth]{Images/2.18b.png}
+        \caption{$F=ab+be+cd+de$}
+    \end{figure}
+    
+    \item $F=((ab)'+c)+(d+ef)'$
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[width=0.5\textwidth]{Images/2.18c.png}
+        \caption{$F=((ab)'+c)+(d+ef)'$}
+    \end{figure}
+\end{enumerate}
+
+\subsection*{2.24 $F=a'd'+a'c+b'cd'+cd$}
+\begin{enumerate}[(a)]
+    \item $a,b,c,d$
+    \item $a',d',a',c,b',c,d',c,d$
+    \item $a'd',a'c,b'cd',cd$
+\end{enumerate}
+
+\subsection*{2.28 }
+\begin{flalign*}
+F   &= a'b(c+d')+a(b'+c)+a(b+d)c & \textrm{Given}       \\
+    &= a'bc+a'bd'+ab'+ac+abc+acd & \textrm{Distribute}  \\
+\end{flalign*}
+
+\subsection*{2.33}
+$G=ab'+b+a'c$
+
+\subsection*{2.39}
+$F=a'b'c+a'bc'+ab'c'+ab'c+abc'$
+
+\subsection*{2.52}
+Part A\\
+$F=ab+cd,G=(1((ab)'(cd)')')'$
+\begin{flalign*}
+G   &= (1((ab)'(cd)')')'    & \textrm{Given}            \\
+    &= 0 + ((ab)'(cd)')''   & \textrm{De Morgan}        \\
+    &= (ab)'(cd)'           & \textrm{Double Inversion} \\
+    &= ab + cd              & \textrm{De Morgan}        \\
+\end{flalign*}
+Part B
+\begin{multicols}{2}
+$F$ Truth Table\\
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+$a$ & $b$ & $c$ & $d$ & $ab$ & $cd$ & $F$ \\ \hline
+0 & 0 & 0 & 0 & 0  & 0  & 0 \\ \hline
+0 & 0 & 0 & 1 & 0  & 0  & 0 \\ \hline
+0 & 0 & 1 & 0 & 0  & 0  & 0 \\ \hline
+0 & 0 & 1 & 1 & 0  & 1  & 1 \\ \hline
+0 & 1 & 0 & 0 & 0  & 0  & 0 \\ \hline
+0 & 1 & 0 & 1 & 0  & 0  & 0 \\ \hline
+0 & 1 & 1 & 0 & 0  & 0  & 0 \\ \hline
+0 & 1 & 1 & 1 & 0  & 1  & 1 \\ \hline
+1 & 0 & 0 & 0 & 0  & 0  & 0 \\ \hline
+1 & 0 & 0 & 1 & 0  & 0  & 0 \\ \hline
+1 & 0 & 1 & 0 & 0  & 0  & 0 \\ \hline
+1 & 0 & 1 & 1 & 0  & 1  & 1 \\ \hline
+1 & 1 & 0 & 0 & 1  & 0  & 1 \\ \hline
+1 & 1 & 0 & 1 & 1  & 0  & 1 \\ \hline
+1 & 1 & 1 & 0 & 1  & 0  & 1 \\ \hline
+1 & 1 & 1 & 1 & 1  & 1  & 1 \\ \hline
+\end{tabular}
+
+\columnbreak
+$G$ Truth Table\\
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+$a$ & $b$ & $c$ & $d$ & $(ab)'$ & $(cd)'$ & $((ab)'(cd)')'$ & $G$ \\ \hline
+0   & 0   & 0   & 0   & 1       & 1       & 0               & 0   \\ \hline
+0   & 0   & 0   & 1   & 1       & 1       & 0               & 0   \\ \hline
+0   & 0   & 1   & 0   & 1       & 1       & 0               & 0   \\ \hline
+0   & 0   & 1   & 1   & 1       & 0       & 1               & 1   \\ \hline
+0   & 1   & 0   & 0   & 1       & 1       & 0               & 0   \\ \hline
+0   & 1   & 0   & 1   & 1       & 1       & 0               & 0   \\ \hline
+0   & 1   & 1   & 0   & 1       & 1       & 0               & 0   \\ \hline
+0   & 1   & 1   & 1   & 1       & 0       & 1               & 1   \\ \hline
+1   & 0   & 0   & 0   & 1       & 1       & 0               & 0   \\ \hline
+1   & 0   & 0   & 1   & 1       & 1       & 0               & 0   \\ \hline
+1   & 0   & 1   & 0   & 1       & 1       & 0               & 0   \\ \hline
+1   & 0   & 1   & 1   & 1       & 0       & 1               & 1   \\ \hline
+1   & 1   & 0   & 0   & 0       & 1       & 0               & 1   \\ \hline
+1   & 1   & 0   & 1   & 0       & 1       & 0               & 1   \\ \hline
+1   & 1   & 1   & 0   & 0       & 1       & 0               & 1   \\ \hline
+1   & 1   & 1   & 1   & 0       & 0       & 1               & 1   \\ \hline
+\end{tabular}
+\end{multicols}
+
+\clearpage
+\subsection*{2.58}
+\begin{multicols}{2}
+\noindent
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$N_3$ & $N_2$ & $N_1$ & $N_0$ & $P$ \\ \hline
+0   & 0   & 0   & 0   & 0   \\ \hline
+0   & 0   & 0   & 1   & 0   \\ \hline
+0   & 0   & 1   & 0   & 1   \\ \hline
+0   & 0   & 1   & 1   & 1   \\ \hline
+0   & 1   & 0   & 0   & 0   \\ \hline
+0   & 1   & 0   & 1   & 1   \\ \hline
+0   & 1   & 1   & 0   & 0   \\ \hline
+0   & 1   & 1   & 1   & 1   \\ \hline
+1   & 0   & 0   & 0   & 0   \\ \hline
+1   & 0   & 0   & 1   & 0   \\ \hline
+1   & 0   & 1   & 0   & 0   \\ \hline
+1   & 0   & 1   & 1   & 1   \\ \hline
+1   & 1   & 0   & 0   & 0   \\ \hline
+1   & 1   & 0   & 1   & 1   \\ \hline
+1   & 1   & 1   & 0   & 0   \\ \hline
+1   & 1   & 1   & 1   & 0   \\ \hline
+\end{tabular}
+
+\columnbreak
+\noindent
+\begin{flalign*}
+P   &= N_3'N_2'N_1N_0'  &+ N_3'N_2'N_1N_0   & & \\
+    &+ N_3'N_2N_1'N_0   &+ N_3'N_2N_1N_0    & & \\
+    &+ N_3N_2'N_1N_0    &+ N_3N_2N_1'N_0    & &
+\end{flalign*}
+
+Circuit on the next page.
+\end{multicols}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Images/2.58.png}
+    \caption{$P$}
+\end{figure}
+
+\clearpage
+\subsection*{2.66}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics{Images/2.66.png}
+    \caption{$F=(a\oplus b)\oplus(c\oplus d)$}
+\end{figure}
+
+\subsection*{2.70}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[height=10cm]{Images/2.70.png}
+    \caption{3$\times$8 decoder with enable }
+\end{figure}
+
+\clearpage
+\subsection*{2.71}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Images/2.71.png}
+    \caption{$8\times1$ MUX}
+\end{figure}
+
+\clearpage
+\subsection*{2.75}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{Images/2.75.png}
+    \caption{8-bit $2\times1$ MUX}
+\end{figure}

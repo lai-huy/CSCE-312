@@ -1,0 +1,100 @@
+\clearpage
+\section*{Problem 2}
+\subsection*{Eight-bit Adder}
+\noindent
+The full 8-bit adder is implemented using eight 1-bit adders (arranged as ripple-carry).\\
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Images/EightBitAdder.png}
+    \caption{8-bit Adder}
+\end{figure}
+
+\clearpage
+\noindent
+Each single bit adder receives three inputs $(A,B,C_i)$, and returns:\\
+$S=A\oplus B\oplus C_i$\\
+$C_o=AB+AC_i+BC_i$
+\begin{figure}[!ht]
+    \centering
+    \includegraphics{Images/SingleBitAdder.png}
+    \caption{1-bit Full Adder}
+\end{figure}
+
+\subsection*{Eight-bit Subtractor}
+\noindent
+The 8-bit subtractor is implemented using two's complement. Input B is inverted, and a constant value of \verb+0x1+ is supplied to the Carry-In input of the adder. The Carry-Out bit is not utilized.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{Images/EightBitSubtractor.png}
+    \caption{8-bit Subtractor}
+\end{figure}
+
+\clearpage
+\subsection*{Eight-bit Magnitude Comparitor}
+\noindent
+The Magnitude comparator is implemented using eight 1-bit comparators connected from most significant bit to least significant.\\
+A value of \verb+010+ is initially loaded into the first comparitor.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Images/EightBitComparator.png}
+    \caption{8-bit Comparitor}
+\end{figure}
+
+\clearpage
+\noindent
+Each single-bit comparitor received five inputs ($A,B,I_{gt},I_{eq},I_{lt}$), and returns:\\
+$O_{gt}=I_{gt}+I_{eq}AB'$\\
+$O_{eq}=I_{eq}\cdot(A\oplus B)'$\\
+$O_{lt}=I_{lt}+I_{eq}A'B$
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{Images/Comp.png}
+    \caption{1-bit Comparitor}
+\end{figure}
+
+\clearpage
+\noindent
+The Eight-bit left shifter is composed of seven one-bit shifters.\\
+Additionally, a $3\times8$ Decoder in order to shift more than one bit.
+\subsection*{Eight-bit Left Shifter}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{Images/LeftShift.png}
+    \caption{8-bit Left Shifter}
+\end{figure}
+
+\clearpage
+\noindent
+The one-bit shifter will shift the input value by one bit. When Shift is set high, the inputed value will be shifted.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{Images/L1.png}
+    \caption{1-bit Left Shifter}
+\end{figure}
+
+\noindent
+The decoder will allow more than one shifter to be active at once. When $O_n$ are set high all outputs from $O_1$ to $O_n$ are also set high.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Images/Decoder2.png}
+    \caption{$3\times7$ Decoder}
+\end{figure}
+
+\clearpage
+\noindent
+The eight-bit right shifter works similar to the left shifter. However, it has an extra mode for arithmetic or logical shifting. When the Arithmetic pin is set high, the right shifter will be set to arithmetic mode. When this pin is low, logical shifting will be active.
+\subsection*{Eight-bit Right Shifter}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{Images/RightShift.png}
+    \caption{8-bit Right Shifter with Arithmetic/Logical Switch}
+\end{figure}
+
+\clearpage
+\noindent
+The one-bit right shifter will shift the input value by one bit. There is also an additional arithmetic mode where the shifter will arithmetically shift instead of logically shifting.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{Images/R1.png}
+    \caption{1-bit Right Shifter}
+\end{figure}

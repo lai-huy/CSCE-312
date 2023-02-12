@@ -1,0 +1,193 @@
+\section*{Chapter 3}
+\subsection*{3.5}
+\textcolor{red}{Correct}
+\begin{minted}{c}
+void decode1(long* xp, long* yp, long* zp) {
+    long x = *xp;
+    long y = *yp;
+    long z = *zp;
+    
+    *yp = x;
+    *zp = y;
+    *xp = z;
+}
+\end{minted}
+
+\subsection*{3.6}
+\textcolor{red}{Correct}\\
+\begin{tabular}{|l|l|}
+    \hline
+    Instruction & Result \\
+    \hline
+    \verb+leaq 9(%rdx), %rax+ & $9+q$ \\
+    \hline
+    \verb+leaq (%rdx,%rbx), %rax+ & $q+p$ \\
+    \hline
+    \verb+leaq (%rdx,%rbx,3), %rax+ & $q+3p$ \\
+    \hline
+    \verb+leaq 2(%rbx,%rbx,7), %rax+ & $2+8p$ \\
+    \hline
+    \verb+leaq 0xE(,%rdx,3), %rax+ & $14+3p$ \\
+    \hline
+    \verb+leaq 6(%rbx,%rdx,7), %rdx+ & $6+p+7q$ \\
+    \hline
+\end{tabular}
+
+\subsection*{3.7}
+\textcolor{red}{Correct}
+\begin{verbatim}
+leaq (%rsi,%rsi,9), %rbx    \\ %rbx = 10 * y
+leaq (%rbx,%rdx), %rbx      \\ %rbx += %rdx
+leaq (%rbx,%rdi,%rsi), %rbx \\ %rbx += y * x
+\end{verbatim}
+
+\begin{minted}{c}
+short scale3(short x, short y, short z) {
+    short t =  10 * y + z + y * x;
+    return t;
+}
+\end{minted}
+
+\subsection*{3.8}
+\textcolor{red}{Correct}\\
+\begin{tabular}{lll}
+    Instruction & Destination & Value \\
+    \hline
+    \verb+addq %rcx,(%rax)+         & \verb+0x100+  & \verb+0x100+  \\
+    \verb+subq %rdx,8(%rax)+        & \verb+0x108+  & \verb+0xA8+   \\
+    \verb+imulq $16,(%rax,%rdx,8)+  & \verb+0x118+  & \verb+0x110+  \\
+    \verb+incq 16(%rax)+            & \verb+0x110+  & \verb+0x14+   \\
+    \verb+decq %rcx+                & \verb+%rcx+   & \verb+0x0+    \\
+    \verb+subq %rdx,%rax+           & \verb+%rax+   & \verb+0xFD+   \\
+\end{tabular}
+
+\subsection*{3.18}
+\textcolor{red}{Correct}
+\begin{minted}{c}
+short test(short x, short y, short z) {
+    short val = z + y - x;
+    if (z > 5) {
+        if (y > 2)
+            val = x/z;
+        else
+            val = x/y;
+    } else if (z < 3)
+        val = z / y;
+    return val;
+}
+\end{minted}
+
+\clearpage
+\subsection*{3.20}
+\textcolor{red}{Correct}\\
+The operator is division `$/$'
+\begin{verbatim}
+arith:
+    leaq    15(%rdi), %rbx  // temp = x + 15
+    testq   %rdi, %rdi      // test x
+    cmovns  %rdi, %rbx      // if x >= 0, temp = x
+    sarq    $4, %rbx        // result = temp >> 4 (= x / 16)
+    ret                     // return
+\end{verbatim}
+
+\subsection*{3.24}
+\textcolor{red}{Correct}
+\begin{verbatim}
+cmpq %rsi, %rdi => %rdi (a) > %rsi (b)
+leaq (,%rsi,%rdi), %rdx => %rdx + 0 + %rsi * %rdi
+\end{verbatim}
+
+\begin{minted}{c}
+short loop_while(short a, short b) {
+    short result = 0;
+    while (a > b) {
+        result = result + (a * b);
+        a = a - 1;
+    }
+    return result;
+}
+\end{minted}
+
+\subsection*{3.25}
+\textcolor{red}{Correct}
+\begin{minted}{cpp}
+long long_while2(long a, long b) {
+    long result = b;
+    while (b > 0) {
+        result = result * a;
+        b = b - a;
+    }
+    
+    return result
+}
+\end{minted}
+
+\clearpage
+\subsection*{3.32}
+\textcolor{red}{Correct}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{Images/table.png}
+    \caption{3.32}
+\end{figure}
+
+\subsection*{3.35}
+\textcolor{red}{Correct}\\
+Register \verb+%rbx+ holds the value of parameter \verb+x+. \verb+%rbx+ will be used to compute the result expression.
+\begin{minted}{c}
+long rfun(unsigned long x) {
+    if (x == 0)
+        return 0;
+    unsinged long nx = x >> 2;
+    long rv = rfun(nx);
+    return x + rv;
+}
+\end{minted}
+
+\clearpage
+\subsection*{3.37}
+\textcolor{red}{Correct}\\
+\begin{tabular}{llll}
+Expression   & Type    & Value              & Assembly Code                                       \\
+\hline
+\verb+P[1]+             & short   & $M[x_{\verb+p+}+2]$      & \verb+movw 2(%rdx),%ax+            \\
+\verb+P+3+i+            & short * & $x_{\verb+p+}+6+2i$      & \verb+leaq 6(%rdx,%rcx,2),%rax+    \\
+\verb+P[i*6-5]+         & short   & $M[x_{\verb+p+}+12i-10]$ & \verb+movw -10(%rdx,%rcx,12),%rax+ \\
+\verb+P[2]+             & short   & $M[x_{\verb+p+}+4]$      & \verb+movw 4(%rdx),%ax}+           \\
+\verb+&P[i++\verb+2]+   & short * & $x_{\verb+p+}+2i+4$      & \verb+leaq 4(%rdx,%rcx,2),%rax+
+\end{tabular}
+
+\subsection*{3.38}
+\textcolor{red}{Correct}
+\begin{verbatim}
+sum_element:
+    leaq 0(,%rdi,8), %rdx       \\ Compute 8i
+    subq %rdi, %rdx             \\ Compute 7i
+    addq %rsi, %rdx             \\ Compute 7i + j
+    leaq (%rsi,%rsi,4), %rax    \\ Compute 5j
+    addq %rax, %rdi             \\ Compute i + 5j
+    movq Q(,%rdi,8), %rax       \\ Retrieve M[x_q + 8(5j+ i)]
+    addq P(,%rdx,8), %rax       \\ Add M[x_p + 8(7i + j)]
+\end{verbatim}
+
+\noindent
+\verb+P+ has a byte offset of $8\cdot(7i+j)$\\
+\verb+Q+ has a byte offset of $8\cdot(5j+i)$
+
+\subsection*{3.41}
+\textcolor{red}{Correct}\\
+\verb+p+ $\rightarrow$ [0, 8]\\
+\verb+s.x+ $\rightarrow$ [8,10]\\
+\verb+s.y+ $\rightarrow$ [10,12]\\
+\verb+next+ $\rightarrow$ [12,20]
+
+\noindent
+The structure requires a total of 20 bytes
+
+\begin{minted}{c}
+void st_init(struct test *st) {
+    st->s.y  = st->s.x;
+    st->p    = &(st->s.y);
+    st->next = st;
+}
+\end{minted}

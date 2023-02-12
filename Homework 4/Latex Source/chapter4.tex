@@ -1,0 +1,261 @@
+\section*{Chapter 4}
+
+\subsection*{4.13}
+\textcolor{red}{Correct}
+\begin{verbatim}
+Fetch:
+icode:ifun <- M1[0x016] = 0x3:0x0
+rA:rB <- M1[0x017] = 0xf, 0x4
+valC <- M8[0x018] = 0x0000000000000080
+valP <- 0x016 + 0x0A = 0x20
+
+Decode:
+do nothing
+
+Execute:
+valE = 0x0 + 0x0000000000000080 = 0x0000000000000080
+
+Memory:
+do nothing
+
+Write Back:
+R[%rsp] <- valE = 0x0000000000000080
+
+PC Update:
+PC <- valP = 0x020
+\end{verbatim}
+
+\subsection*{4.14}
+\textcolor{red}{Correct}
+\begin{verbatim}
+Fetch:
+icode:ifun <- M1[0x02c] = b:0
+rA:rB <- M1[0c02b] = 0:f
+valP <- 0x02c + 0x2 = 0x02e
+
+Decode:
+valA <- R[%rsp]= 0x78
+valB <- R[%rsp]= 0xC
+
+Execute
+valE <- 120 + 8 = 0x80
+valM <- M8[120]= 0x9
+
+Write Back
+R[%rsp] <- 0x80
+R[%rax] <- 0x9
+
+PC Update:
+PC <- 0x02e
+\end{verbatim}
+
+\subsection*{4.43}
+\textcolor{red}{Correct}\\
+Instruction Frequency: 0.20\\
+Cost of misprediction: 2\\
+Rate of misprediction: 0.35
+$CPI=0.20*0.35*2=1.25$
+
+\subsection*{6.12}
+\textcolor{red}{Correct}\\
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+CT & CT & CT & CT & CT & CT & CT & CT & CI & CI & CI & CO & CO \\ \hline
+12 & 11 & 10 & 9  & 8  & 7  & 6  & 5  & 4  & 3  & 2  & 1  & 0  \\ \hline
+\end{tabular}
+
+\clearpage
+\subsection*{6.17}
+\textcolor{red}{Correct}
+\begin{verbatim}
+          tag    si off
+s[0][0] = 0b0000 0  000
+s[0][1] = 0b0000 0  100
+s[1][0] = 0b0000 1  000
+s[1][1] = 0b0000 1  100
+d[0][0] = 0b0001 0  000
+d[0][1] = 0b0001 0  100
+d[1][0] = 0b0001 1  000
+d[1][1] = 0b0001 1  100
+\end{verbatim}
+
+\noindent
+Given\\
+Cache:
+\begin{tabular}{|l|l|}
+\hline
+\verb+d[0][0]+ & nothing \\ \hline
+\end{tabular}
+
+
+\noindent
+\begin{tabular}{llllll}
+\multicolumn{3}{l}{src arr} & \multicolumn{3}{l}{dst arr} \\ \hline
+        & Col 0   & Col 1   &         & Col 0   & Col 1   \\ \hline
+Row 0   & m       &         & Row 0   & m       &         \\
+Row 1   &         &         & Row 1   &         &        
+\end{tabular}
+
+\noindent
+\rule{\textwidth}{1pt}
+Read \verb+s[0][1]+\\
+Cache:
+\begin{tabular}{|l|l|}
+\hline
+\verb+s[0][1]+ & nothing \\ \hline
+\end{tabular}
+
+
+\noindent
+\begin{tabular}{llllll}
+\multicolumn{3}{l}{src arr} & \multicolumn{3}{l}{dst arr} \\ \hline
+        & Col 0   & Col 1   &         & Col 0   & Col 1   \\ \hline
+Row 0   & m       & m       & Row 0   & m       &         \\
+Row 1   &         &         & Row 1   &         &        
+\end{tabular}
+
+\noindent
+\rule{\textwidth}{1pt}
+Write \verb+d[1][0]+\\
+Cache:
+\begin{tabular}{|l|l|}
+\hline
+\verb+s[0][1]+ & \verb+d[1][0]+ \\ \hline
+\end{tabular}
+
+
+\noindent
+\begin{tabular}{llllll}
+\multicolumn{3}{l}{src arr} & \multicolumn{3}{l}{dst arr} \\ \hline
+        & Col 0   & Col 1   &         & Col 0   & Col 1   \\ \hline
+Row 0   & m       & m       & Row 0   & m       &         \\
+Row 1   &         &         & Row 1   & m=      &        
+\end{tabular}
+
+\noindent
+\rule{\textwidth}{1pt}
+Read \verb+s[1][0]+\\
+Cache:
+\begin{tabular}{|l|l|}
+\hline
+\verb+s[0][1]+ & \verb+s[1][0]+ \\ \hline
+\end{tabular}
+
+
+\noindent
+\begin{tabular}{llllll}
+\multicolumn{3}{l}{src arr} & \multicolumn{3}{l}{dst arr} \\ \hline
+        & Col 0   & Col 1   &         & Col 0   & Col 1   \\ \hline
+Row 0   & m       & m       & Row 0   & m       &         \\
+Row 1   & m       &         & Row 1   & m       &        
+\end{tabular}
+
+\noindent
+\rule{\textwidth}{1pt}
+Write \verb+d[0][1]+\\
+Cache:
+\begin{tabular}{|l|l|}
+\hline
+\verb+d[0][1]+ & \verb+s[1][0]+ \\ \hline
+\end{tabular}
+
+
+\noindent
+\begin{tabular}{llllll}
+\multicolumn{3}{l}{src arr} & \multicolumn{3}{l}{dst arr} \\ \hline
+        & Col 0   & Col 1   &         & Col 0   & Col 1   \\ \hline
+Row 0   & m       & m       & Row 0   & m       & m       \\
+Row 1   & m       &         & Row 1   & m       &        
+\end{tabular}
+
+\noindent
+\begin{tabular}{llllll}
+\multicolumn{3}{l}{src arr} & \multicolumn{3}{l}{dst arr} \\ \hline
+        & Col 0   & Col 1   &         & Col 0   & Col 1   \\ \hline
+Row 0   & m       & m       & Row 0   & m       &         \\
+Row 1   & m       &         & Row 1   & m       &        
+\end{tabular}
+
+\noindent
+\rule{\textwidth}{1pt}
+Read \verb+s[1][1]+\\
+Cache:
+\begin{tabular}{|l|l|}
+\hline
+\verb+d[0][1]+ & \verb+s[1][0]+ \\ \hline
+\end{tabular}
+
+
+\noindent
+\begin{tabular}{llllll}
+\multicolumn{3}{l}{src} & \multicolumn{3}{l}{dst arr} \\ \hline
+        & Col 0   & Col 1   &         & Col 0   & Col 1   \\ \hline
+Row 0   & m       & m       & Row 0   & m       & m       \\
+Row 1   & m       & h       & Row 1   & m       &        
+\end{tabular}
+
+\noindent
+\begin{tabular}{llllll}
+\multicolumn{3}{l}{src arr} & \multicolumn{3}{l}{dst arr} \\ \hline
+        & Col 0   & Col 1   &         & Col 0   & Col 1   \\ \hline
+Row 0   & m       & m       & Row 0   & m       &         \\
+Row 1   & m       &         & Row 1   & m       &        
+\end{tabular}
+
+\noindent
+\rule{\textwidth}{1pt}
+Write \verb+d[1][1]+\\
+Cache:
+\begin{tabular}{|l|l|}
+\hline
+\verb+d[1][0]+ & \verb+d[1][1]+ \\ \hline
+\end{tabular}
+
+
+\noindent
+\begin{tabular}{llllll}
+\multicolumn{3}{l}{src arr} & \multicolumn{3}{l}{dst arr} \\ \hline
+        & Col 0   & Col 1   &         & Col 0   & Col 1   \\ \hline
+Row 0   & m       & m       & Row 0   & m       & m       \\
+Row 1   & m       & h       & Row 1   & m       & m        
+\end{tabular}
+
+\clearpage
+\begin{verbatim}
+          tag   si off
+s[0][0] = 0b000 00 000
+s[0][1] = 0b000 00 100
+s[1][0] = 0b000 01 000
+s[1][1] = 0b000 01 100
+d[0][0] = 0b000 10 000
+d[0][1] = 0b000 10 100
+d[1][0] = 0b000 11 000
+d[1][1] = 0b000 11 100
+\end{verbatim}
+
+\begin{verbatim}
+Read  s[0][0] Miss cache[0][0] = s[0][0], s[0][1]
+Write d[0][0] Miss cache[1][0] = d[0][0], d[0][1]
+Read  s[0][1] Hit  read cache[0][1] offset ob100
+Write d[1][0] Miss cache[1][1] = d[1][0], d[1][1]
+Read  s[1][0] Miss cahce[0][1] = s[1][0], s[1][1]
+Write d[0][1] Hit  read cache[1][0] offset 0b100
+Read  s[1][1] Hit  read cache[1][1] offset 0b100
+Write d[1][1] Hit  read cache[1][1] offset 0b100
+\end{verbatim}
+
+\noindent
+Cache:
+\begin{tabular}{|l|l|l|l|}
+\hline
+\verb+s[0][0]+ & \verb+s[1][0]+ & \verb+d[0][0]+ & \verb+d[1][0]+ \\ \hline
+\end{tabular}
+
+\subsection*{6.18}
+\textcolor{red}{Correct}\\
+Each 32-byte cache block holds two consecutive \verb+algae_position+ structures.\\
+With cache being 2048-bytes, it can hold 64 blocks.\\
+Each \verb+algae_position+ in \verb+grid+ is read twice, once for its x-coordinate and once for its y-coordinate.\\
+Since the for loop traverses the entire grid, there are a total of $32\times32\times2=2048$ reads.\\
+Since two consecutive \verb+algae_position+ structures are written every block, the cache pattern will miss, then hit and alternate between these states through the entire \verb+grid+.\\
+Therefore, the total number of misses would be $1024$ and the miss rate is $50\%$.
